@@ -6,14 +6,17 @@ import Row from '../Row/Row'
 import TableHeader from '../TableHeader/TableHeader'
 
 import { store } from '../../logic/store'
-import { closeModal, openModal, setCurrentCellIndex } from '../../logic/actions'
+import { changeTableData, closeModal, openModal, getCellIndex } from '../../logic/actions'
 import { useSelector } from 'react-redux'
-import { tableData } from '../../config/types'
+import { configType, tableData } from '../../config/types'
+import filterData from '../../utiles/filterData'
 
-export default function Table() {
+export default function Table(props: any) {
 
    let i: number = 0;
    const table: any = useRef()
+   const day: configType = props.day
+
 
    useEffect(() => {
       table.current.addEventListener("click", () => {
@@ -22,33 +25,44 @@ export default function Table() {
       })
    }, [])
 
-   const data: tableData = useSelector((state: any) => state.changeData)
-   console.log(data);
+
+
+
+
 
    return (
 
       <table ref={table}
+
          className="table table-light  table-bordered border-secondary"
 
          onClick={(e) => {
             const target = e.target as HTMLTableCellElement
             const row = target.parentElement as HTMLTableRowElement
-            const table = row.closest('table') as HTMLTableElement
 
-            store.dispatch(openModal())
-            store.dispatch(setCurrentCellIndex(row.rowIndex, target.cellIndex))
+
+            if (target.innerHTML === '') {
+               store.dispatch(getCellIndex(day[0], row.rowIndex, target.cellIndex))
+               // target.innerText = "*ЗАНЯТО*"
+               store.dispatch(openModal())
+            }
+
 
          }}>
-         <thead><tr><th className='bg-primary'></th>{TableConfig.columns.map(item => {
-            return <TableHeader key={item} title={item} />
+         <caption className='caption-top'>28.09, {day[1]}</caption>
+         <thead><tr><th className='bg-primary'></th>{TableConfig.columns.map((item: configType) => {
+            return <TableHeader key={item[0]} title={item[1]} />
          })}</tr></thead>
          <tbody >
-            {TableConfig.rows.map(item => {
+            {TableConfig.rows.map((item: configType) => {
+
+
                i++
-               return <Row key={item} title={item} data={data[i - 1]} />
+               return <Row key={item[0]} row={item} data={filterData(props.data, item[0], "row")} />
             })}
          </tbody>
 
       </table>
+
    )
 }

@@ -1,5 +1,21 @@
+@use "../../config/variables.scss" as var;
+
 .table {
    td {
       cursor: pointer;
+      min-width: 120px;
+      max-width: 120px;
    }
+
+   .bg-danger {
+      cursor: default;
+   }
+
+
+}
+
+caption {
+   background-color: var.$primary-dark;
+   padding-left: 20px;
+   color: black;
 }

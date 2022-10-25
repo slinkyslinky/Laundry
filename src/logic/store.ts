@@ -1,7 +1,8 @@
 
 import { applyMiddleware, combineReducers, createStore } from "redux"
+import thunk from "redux-thunk"
 
-import { toggleModalReducer, getCurrentCellIndex, changeTableDataReducer, getInputDataReducer } from "./redusers"
+import { toggleModalReducer, getCurrentCellIndex, changeTableDataReducer, getInputDataReducer, getCellDataReducer } from "./redusers"
 
 
 const rootReducer = combineReducers(
@@ -9,11 +10,12 @@ const rootReducer = combineReducers(
       toggleModal: toggleModalReducer,
       cellIndex: getCurrentCellIndex,
       changeData: changeTableDataReducer,
-      input: getInputDataReducer
+      input: getInputDataReducer,
+      cell: getCellDataReducer
    }
 )
 
 
 
 
-export const store = createStore(rootReducer, {}, applyMiddleware())
+export const store = createStore(rootReducer, {}, applyMiddleware(thunk))
