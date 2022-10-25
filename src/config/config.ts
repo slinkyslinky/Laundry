@@ -6,8 +6,10 @@ interface ITable {
    columns: configType[]
 }
 
-export const SERVER_URL = "http://localhost:3001/"
-export const SERVER_PORT = 3001
+// export const SERVER_URL = "http://localhost:3001/"
+export const SERVER_URL = "https://spbgic-laundry-server.herokuapp.com/"
+
+// export const SERVER_PORT = 3001
 
 
 export const TableConfig: ITable = {
