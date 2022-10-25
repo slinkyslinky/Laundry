@@ -6,8 +6,8 @@ import Row from '../Row/Row'
 import TableHeader from '../TableHeader/TableHeader'
 
 import { store } from '../../logic/store'
-import { changeTableData, closeModal, openModal, getCellIndex } from '../../logic/actions'
-import { useSelector } from 'react-redux'
+import { changeTableData, closeModal, openModal, getCellIndex, updateData } from '../../logic/actions'
+import { useDispatch, useSelector } from 'react-redux'
 import { configType, tableData } from '../../config/types'
 import filterData from '../../utiles/filterData'
 
@@ -27,7 +27,7 @@ export default function Table(props: any) {
 
 
 
-
+   const dispatch = useDispatch()
 
 
    return (
@@ -43,7 +43,7 @@ export default function Table(props: any) {
 
             if (target.innerHTML === '') {
                store.dispatch(getCellIndex(day[0], row.rowIndex, target.cellIndex))
-               // target.innerText = "*ЗАНЯТО*"
+               dispatch(updateData() as any)
                store.dispatch(openModal())
             }
 
